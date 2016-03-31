@@ -79,8 +79,7 @@ def is_purchase(description):
 
 def parse_purchase(description):
 	"""Parses a purchase type of transaction."""
-	purchase = parse_purchase_refund(PURCHASE_PATTERN.match(description))
-	purchase["type"] = "PURCHASE"
+	purchase = parse_purchase_refund(PURCHASE_PATTERN.match(description), "PURCHASE")
 	return purchase
 
 
@@ -94,13 +93,13 @@ def is_refund(description):
 
 def parse_refund(description):
 	"""Parses a refund type of transaction."""
-	refund = parse_purchase_refund(REFUND_PATTERN.match(description))
-	refund["type"] = "REFUND"
+	refund = parse_purchase_refund(REFUND_PATTERN.match(description), "REFUND")
 	return refund;
 
 
-def parse_purchase_refund(match):
+def parse_purchase_refund(match, type):
 	return {
+		"type": type, 
 		"sub_type": match.group(1),
 		"location": match.group(2),
 		"description": match.group(3)
