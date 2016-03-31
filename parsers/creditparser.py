@@ -1,5 +1,5 @@
 """
-txt-to-json.py
+creditparser.py
 
 Parses Santander UK credit card reports and produces a JSON file with the transactions.
 
@@ -69,6 +69,7 @@ def parse_description(description):
 
 def parse_arguments():
 	""" Parses the command-line arguments. """
+
 	parser = argparse.ArgumentParser(
 		description = "Converts Santander TXT credit reports to JSON.")
 	parser.add_argument("input_file", help = "The input TXT credit report path.")
