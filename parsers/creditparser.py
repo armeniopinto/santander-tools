@@ -62,23 +62,32 @@ PURCHASE_PATTERN = re.compile(r"^PURCHASE\ -\ ([^\t]+)\t([^\t]+)\t(.*)$")
 # PURCHASE [type] REFUND	[location]	[description]
 REFUND_PATTERN = re.compile(r"^PURCHASE ([^\ ]+) REFUND\t([^\t]+)\t(.*)$")
 
+# RECURRENT TRANSACTION	[location]	[description]
+RECURRENT_PATTERN = re.compile(r"^([^\ ]+) TRANSACTION\t([^\t]+)\t(.*)$")
+
 def parse_description(description):
 	"""Parses a transaction description."""
 
 	# Replaces the description multiple spaces separators with tabs:
 	description = re.sub(r"\s{2,}", r"\t", description).strip()
-	match = PURCHASE_PATTERN.match(description)
+
 	# Regular purchase:
+	match = PURCHASE_PATTERN.match(description)
 	if match:
 		return build_transaction_description(match, "PURCHASE")
-	else:
-		match = REFUND_PATTERN.match(description)
-		# Refund:
-		if match:
-			return build_transaction_description(match, "REFUND")
-		# Some other transaction (initial balance, payment, etc.):
-		else:
-			return {"type": description}
+
+	# Refund:
+	match = REFUND_PATTERN.match(description)
+	if match:
+		return build_transaction_description(match, "REFUND")
+
+	# Recurrent:
+	match = RECURRENT_PATTERN.match(description)
+	if match:
+		return build_transaction_description(match, "PURCHASE")
+
+	# Some other transaction (initial balance, payment, etc.):
+	return {"type": description}
 
 
 def build_transaction_description(match, type):
