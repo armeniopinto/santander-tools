@@ -32,7 +32,7 @@ def parse_file(input_file):
 
 
 # [date]	[card]	[description]	([amount_in]|[money_out])
-TRANSACTION_PATTERN = re.compile(r"^(\d{4}-\d{2}-\d{2})\t(\*\*\ \d{4})\t([^\t]+)\t((\d+\.\d{2})?)\t?((\d+\.\d{2})?)$")
+TRANSACTION_PATTERN = re.compile(r"^(\d{4}-\d{2}-\d{2})\t\*\*\ (\d{4})\t([^\t]+)\t((\d+\.\d{2})?)\t?((\d+\.\d{2})?)$")
 
 def is_transaction(line):
 	"""Returns a match if the supplied line is a transaction."""
