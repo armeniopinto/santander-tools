@@ -45,6 +45,7 @@ def parse_transaction(line):
 	transaction = {}
 	match = TRANSACTION_PATTERN.match(line)
 	transaction["date"] = match.group(1)
+	transaction["card_type"] = "Credit"
 	transaction["card"] = match.group(2)
 	transaction.update(parse_description(match.group(3)))
 	amount = Decimal(match.group(4))
