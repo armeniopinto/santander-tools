@@ -51,7 +51,7 @@ def parse_transaction(line):
 	# All "money-out" transaction lines end with a non-tab. This is a bit of a hack :(.
 	if not line.endswith("\t"):
 		amount = amount * Decimal("-1")
-	transaction["amount"] = amount
+	transaction["amount"] = float(amount)
 
 	return transaction
 
@@ -106,14 +106,7 @@ def main():
 	args = parser = parse_arguments()
 	output = parse_file(args.input_file)
 	with open(args.output_file, "w") as o:
-		json.dump(output, o, indent = 4, separators = (",", ": "), default = decimal_default)
-
-
-def decimal_default(obj):
-	"""Converts all decimals to floats during JSON serialisation."""
-	if isinstance(obj, Decimal):
-		return float(obj)
-	raise TypeError
+		json.dump(output, o, indent = 4, separators = (",", ": "))
 
 
 def parse_arguments():
