@@ -1,0 +1,32 @@
+[
+	{
+		"transaction": "2007-07-13\t** 1234\tINITIAL BALANCE                  \t123.45",
+		"expected": {
+			"date": "2007-07-13",
+			"card": "** 1234",
+			"type": "INITIAL BALANCE",
+			"amount": -123.45
+		}
+	},
+	{
+		"transaction": "2007-07-13\t** 1234\tPAYMENT RECEIVED                 \t123.45\t",
+		"expected": {
+			"date": "2007-07-13",
+			"card": "** 1234",
+			"type": "PAYMENT RECEIVED",
+			"amount": 123.45
+		}
+	},
+	{
+		"transaction": "2007-07-13\t** 1234\tPURCHASE - DOMESTIC            SOMEWHERE                  SOME SHOP                   \t123.45",
+		"expected": {
+			"date": "2007-07-13",
+			"card": "** 1234",
+			"type": "PURCHASE",
+			"sub_type": "DOMESTIC",
+			"location": "SOMEWHERE",
+			"description": "SOME SHOP",
+			"amount": -123.45
+		}
+	}
+]
