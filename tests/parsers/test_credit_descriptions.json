@@ -1,0 +1,47 @@
+[
+	{
+		"description": "PURCHASE - DOMESTIC            SOMEWHERE                  SOME SHOP                   ",
+		"expected": {
+			"type": "PURCHASE",
+			"sub_type": "DOMESTIC",
+			"location": "SOMEWHERE",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "PURCHASE - INTERNATIONAL       SOMEWHERE                  SOME SHOP                   ",
+		"expected": {
+			"type": "PURCHASE",
+			"sub_type": "INTERNATIONAL",
+			"location": "SOMEWHERE",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "PURCHASE DOMESTIC REFUND       SOMEWHERE                  SOME SHOP                   ",
+		"expected": {
+			"type": "REFUND",
+			"sub_type": "DOMESTIC",
+			"location": "SOMEWHERE",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "PURCHASE INTERNA. REFUND       SOMEWHERE                  SOME SHOP                   ",
+		"expected": {
+			"type": "REFUND",
+			"sub_type": "INTERNA.",
+			"location": "SOMEWHERE",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "RECURRENT TRANSACTION          SOMEWHERE                 SOME SHOP                     ",
+		"expected": {
+			"type": "PURCHASE",
+			"sub_type": "RECURRENT",
+			"location": "SOMEWHERE",
+			"description": "SOME SHOP"
+		}
+	}
+]
