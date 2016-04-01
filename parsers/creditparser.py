@@ -104,7 +104,7 @@ def build_transaction_description(match, type):
 
 
 def main():
-	args = parser = parse_arguments()
+	args = parse_arguments()
 	output = parse_file(args.input_file)
 	with open(args.output_file, "w") as o:
 		json.dump(output, o, indent = 4, separators = (",", ": "))
