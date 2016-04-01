@@ -35,7 +35,7 @@ def parse_file(input_file):
 TRANSACTION_PATTERN = re.compile(r"^(\d{4}-\d{2}-\d{2})\t(\*\*\ \d{4})\t([^\t]+)\t((\d+\.\d{2})?)\t?((\d+\.\d{2})?)$")
 
 def is_transaction(line):
-	"""Returns something if the line is a transaction."""
+	"""Returns a match if the supplied line is a transaction."""
 	return TRANSACTION_PATTERN.match(line)
 
 
@@ -56,48 +56,33 @@ def parse_transaction(line):
 	return transaction
 
 
+# PURCHASE - [type]	[location]	[description]
+PURCHASE_PATTERN = re.compile(r"^PURCHASE\ -\ ([^\t]+)\t([^\t]+)\t(.*)$")
+
+# PURCHASE [type] REFUND	[location]	[description]
+REFUND_PATTERN = re.compile(r"^PURCHASE ([^\ ]+) REFUND\t([^\t]+)\t(.*)$")
+
 def parse_description(description):
 	"""Parses a transaction description."""
 
 	# Replaces the description multiple spaces separators with tabs:
 	description = re.sub(r"\s{2,}", r"\t", description).strip()
-	if is_purchase(description):
-		return parse_purchase(description)
-	elif is_refund(description):
-		return parse_refund(description)
+	match = PURCHASE_PATTERN.match(description)
+	# Regular purchase:
+	if match:
+		return build_transaction_description(match, "PURCHASE")
 	else:
-		return {"type": description}
+		match = REFUND_PATTERN.match(description)
+		# Refund:
+		if match:
+			return build_transaction_description(match, "REFUND")
+		# Some other transaction (initial balance, payment, etc.):
+		else:
+			return {"type": description}
 
 
-# PURCHASE - [type]	[location]	[description]
-PURCHASE_PATTERN = re.compile(r"^PURCHASE\ -\ ([^\t]+)\t([^\t]+)\t(.*)$")
-
-def is_purchase(description):
-	"""Returns something is the transaction's description corresponds to a purchase."""
-	return PURCHASE_PATTERN.match(description)
-
-
-def parse_purchase(description):
-	"""Parses a purchase type of transaction."""
-	purchase = parse_purchase_refund(PURCHASE_PATTERN.match(description), "PURCHASE")
-	return purchase
-
-
-# PURCHASE [type] REFUND	[location]	[description]
-REFUND_PATTERN = re.compile(r"^PURCHASE ([^\ ]+) REFUND\t([^\t]+)\t(.*)$")
-
-def is_refund(description):
-	"""Returns something is the transaction's description corresponds to a refund."""
-	return REFUND_PATTERN.match(description)
-
-
-def parse_refund(description):
-	"""Parses a refund type of transaction."""
-	refund = parse_purchase_refund(REFUND_PATTERN.match(description), "REFUND")
-	return refund;
-
-
-def parse_purchase_refund(match, type):
+def build_transaction_description(match, type):
+	"""Builds a transaction's description from a regex match."""
 	return {
 		"type": type, 
 		"sub_type": match.group(1),
