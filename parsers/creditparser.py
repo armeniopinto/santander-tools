@@ -19,7 +19,9 @@ def parse_file(input_file):
 
 	date - the transaction's date.
 	card - the credit card associated with the transaction.
+	card_type - the type of card, always 'Credit' for credit reports.
 	type - the textual description of the transaction type.
+	sub_type - the textual description of the transaction sub-type.
 	location - the place where the transaction occurred.
 	description - the textual description of the transaction.
 	amount - the transaction's amount (negative value for purchases, positive for money in).
