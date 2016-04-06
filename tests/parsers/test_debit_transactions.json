@@ -1,0 +1,30 @@
+[
+	{
+		"transaction": [
+			"Date: 31/12/2015",
+			"Description: TRANSFER TO SOMEONE ELSE",
+			"Amount: -123.45"
+		],
+		"expected": {
+			"card": "1234",
+			"date": "2015-12-31",
+			"type": "TRANSFER TO",
+			"description": "SOMEONE ELSE",
+			"amount": -123.45
+		}
+	},
+	{
+		"transaction": [
+			"Date: 31/12/2015",
+			"Description: TRANSFER FROM SOMEONE ELSE",
+			"Amount: 123.45"
+		],
+		"expected": {
+			"card": "1234",
+			"date": "2015-12-31",
+			"type": "TRANSFER FROM",
+			"description": "SOMEONE ELSE",
+			"amount": 123.45
+		}
+	}
+]

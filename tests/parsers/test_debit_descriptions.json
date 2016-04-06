@@ -1,0 +1,156 @@
+[
+	{
+		"description": "CARD PAYMENT TO SOME SHOP",
+		"expected": {
+			"type": "CARD PAYMENT",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "CASH WITHDRAWAL AT SOME ATM MACHINE",
+		"expected": {
+			"type": "CASH WITHDRAWAL",
+			"description": "SOME ATM MACHINE"
+		}
+	},
+	{
+		"description": "CASH WITHDRAWAL REVERSAL AT SOME ATM MACHINE",
+		"expected": {
+			"type": "CASH WITHDRAWAL REVERSAL",
+			"description": "SOME ATM MACHINE"
+		}
+	},
+	{
+		"description": "CASH WITHDRAWAL HANDLING CHARGE SOME RANDOM TEXT",
+		"expected": {
+			"type": "CASH WITHDRAWAL HANDLING CHARGE",
+			"description": "SOME RANDOM TEXT"
+		}
+	},
+	{
+		"description": "CASH PAID IN AT SOME BANK",
+		"expected": {
+			"type": "CASH PAID IN",
+			"description": "SOME BANK"
+		}
+	},
+	{
+		"description": "POST OFFICE CASH WITHDRAWAL",
+		"expected": {
+			"type": "POST OFFICE CASH WITHDRAWAL",
+			"description": ""
+		}
+	},
+	{
+		"description": "CARD PAYMENT TO SOME SHOP",
+		"expected": {
+			"type": "CARD PAYMENT",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "DIRECT DEBIT PAYMENT TO SOMEONE SOMEWHERE",
+		"expected": {
+			"type": "DIRECT DEBIT PAYMENT",
+			"description": "SOMEONE SOMEWHERE"
+		}
+	},
+	{
+		"description": "BILL PAYMENT TO SOME COMPANY",
+		"expected": {
+			"type": "BILL PAYMENT",
+			"description": "SOME COMPANY"
+		}
+	},
+	{
+		"description": "BILL PAYMENT VIA FASTER PAYMENT TO SOMEONE SOMEWHERE",
+		"expected": {
+			"type": "BILL PAYMENT VIA FASTER PAYMENT",
+			"description": "SOMEONE SOMEWHERE"
+		}
+	},
+	{
+		"description": "FASTER PAYMENTS RECEIPT SOME STUFF",
+		"expected": {
+			"type": "FASTER PAYMENTS RECEIPT",
+			"description": "SOME STUFF"
+		}
+	},
+	{
+		"description": "TRANSFER TO SOME OTHER ACCOUNT",
+		"expected": {
+			"type": "TRANSFER TO",
+			"description": "SOME OTHER ACCOUNT"
+		}
+	},
+	{
+		"description": "TRANSFER FROM SOME OTHER ACCOUNT",
+		"expected": {
+			"type": "TRANSFER FROM",
+			"description": "SOME OTHER ACCOUNT"
+		}
+	},
+	{
+		"description": "TRANSFER VIA FASTER PAYMENT",
+		"expected": {
+			"type": "TRANSFER VIA FASTER PAYMENT",
+			"description": ""
+		}
+	},
+	{
+		"description": "REJECTED TRANSFER VIA FASTER PAYMENT TO SOMEONE ELSE",
+		"expected": {
+			"type": "REJECTED TRANSFER VIA FASTER PAYMENT",
+			"description": "SOMEONE ELSE"
+		}
+	},
+	{
+		"description": "REGULAR TRANSFER PAYMENT TO SOME OTHER ACCOUNT",
+		"expected": {
+			"type": "REGULAR TRANSFER PAYMENT",
+			"description": "SOME OTHER ACCOUNT"
+		}
+	},
+	{
+		"description": "STANDING ORDER VIA FASTER PAYMENT TO SOME COMPANY",
+		"expected": {
+			"type": "STANDING ORDER VIA FASTER PAYMENT",
+			"description": "SOME COMPANY"
+		}
+	},
+	{
+		"description": "BANK GIRO CREDIT SOME REFERENCE",
+		"expected": {
+			"type": "BANK GIRO CREDIT",
+			"description": "SOME REFERENCE"
+		}
+	},
+	{
+		"description": "CREDIT FROM SOME SHOP",
+		"expected": {
+			"type": "CREDIT",
+			"description": "SOME SHOP"
+		}
+	},
+	{
+		"description": "CHEQUE PAID IN AT SOME BANK",
+		"expected": {
+			"type": "CHEQUE PAID IN",
+			"description": "SOME BANK"
+		}
+	},
+	{
+		"description": "INTEREST PAID SOME STUFF",
+		"expected": {
+			"type": "INTEREST PAID",
+			"description": "SOME STUFF"
+		}
+	},
+	{
+		"description": "OVERSEAS TRANSACTION FEE",
+		"expected": {
+			"type": "OVERSEAS TRANSACTION FEE",
+			"description": ""
+		}
+	}
+]
