@@ -43,32 +43,7 @@ def parse_card(card):
 
 
 DATE_PATTERN = re.compile(r"Date:\s(\d{2}/\d{2}/\d{4})")
-
-DESCRIPTION_PATTERNS = [
-	re.compile(r"Description:\s(CARD\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s(CASH\ WITHDRAWAL)\ AT\ (.*)"),
-	re.compile(r"Description:\s(CASH\ WITHDRAWAL\ REVERSAL)\ AT\ (.*)"),
-	re.compile(r"Description:\s(CASH\ WITHDRAWAL\ HANDLING\ CHARGE)\ (.*)"),
-	re.compile(r"Description:\s(CASH\ PAID\ IN)\ AT\ (.*)"),
-	re.compile(r"Description:\s(POST\ OFFICE\ CASH\ WITHDRAWAL)()"),
-	re.compile(r"Description:\s(DIRECT\ DEBIT\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s(BILL\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s(BILL\ PAYMENT\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s\s?(FASTER\ PAYMENTS\ RECEIPT) (.*)"),
-	re.compile(r"Description:\s(TRANSFER\ TO)\ (.*)"),
-	re.compile(r"Description:\s(TRANSFER\ FROM)\ (.*)"),
-	re.compile(r"Description:\s(TRANSFER\ VIA\ FASTER\ PAYMENT)()"),
-	re.compile(r"Description:\s(REGULAR\ TRANSFER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s(REJECTED\ TRANSFER\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s(STANDING\ ORDER\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"Description:\s(BANK\ GIRO)\ (.*)"),
-	re.compile(r"Description:\s(CREDIT)\ FROM\ (.*)"),
-	re.compile(r"Description:\s(CHEQUE\ PAID\ IN)\ (.*)"),
-	re.compile(r"Description:\s(BANK\ CHEQUE)\ (.*)"),
-	re.compile(r"Description:\s(INTEREST\ PAID)\ (.*)"),
-	re.compile(r"Description:\s(OVERSEAS\ TRANSACTION\ FEE)()")
-]
-
+DESCRIPTION_PATTERN = re.compile(r"Description:\s(.*)")
 AMOUNT_PATTERN = re.compile(r"Amount:\s(\-?\d+\.\d{2})")
 
 def parse_transaction(lines, card):
@@ -76,22 +51,57 @@ def parse_transaction(lines, card):
 
 	transaction = {}
 
+	transaction["card"] = card
 	transaction["date"] = datetime.datetime.strptime(
-		DATE_PATTERN.match(lines[0]).group(1), "%d/%m/%Y").strftime("%Y/%m/%d")
-
-	for description_pattern in DESCRIPTION_PATTERNS:
-		match = description_pattern.match(lines[1])
-		if match:
-			transaction["type"] = match.group(1)
-			transaction["description"] = match.group(2)
-			break
-	if "type" not in transaction:
-		transaction["type"] = "UNKNOWN"
-		transaction["description"] = lines[1]
-
-	transaction["amount"] = AMOUNT_PATTERN.match(lines[2]).group(1)
+		DATE_PATTERN.match(lines[0]).group(1), "%d/%m/%Y").strftime("%Y-%m-%d")
+	transaction.update(parse_description(DESCRIPTION_PATTERN.match(lines[1]).group(1)))
+	transaction["amount"] = float(Decimal(AMOUNT_PATTERN.match(lines[2]).group(1)))
 
 	return transaction
+
+
+DESCRIPTION_PATTERNS = [
+	re.compile(r"(CARD\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"(CASH\ WITHDRAWAL)\ AT\ (.*)"),
+	re.compile(r"(CASH\ WITHDRAWAL\ REVERSAL)\ AT\ (.*)"),
+	re.compile(r"(CASH\ WITHDRAWAL\ HANDLING\ CHARGE)\ (.*)"),
+	re.compile(r"(CASH\ PAID\ IN)\ AT\ (.*)"),
+	re.compile(r"(POST\ OFFICE\ CASH\ WITHDRAWAL)()"),
+	re.compile(r"(DIRECT\ DEBIT\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"(BILL\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"(BILL\ PAYMENT\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"\s?(FASTER\ PAYMENTS\ RECEIPT) (.*)"),
+	re.compile(r"(TRANSFER\ TO)\ (.*)"),
+	re.compile(r"(TRANSFER\ FROM)\ (.*)"),
+	re.compile(r"(TRANSFER\ VIA\ FASTER\ PAYMENT)()"),
+	re.compile(r"(REJECTED\ TRANSFER\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"(REGULAR\ TRANSFER\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"(STANDING\ ORDER\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
+	re.compile(r"(BANK\ GIRO\ CREDIT)\ (.*)"),
+	re.compile(r"(CREDIT)\ FROM\ (.*)"),
+	re.compile(r"(CHEQUE\ PAID\ IN)\ AT\ (.*)"),
+	re.compile(r"(BANK\ CHEQUE)\ (.*)"),
+	re.compile(r"(INTEREST\ PAID)\ (.*)"),
+	re.compile(r"(OVERSEAS\ TRANSACTION\ FEE)()")
+]
+
+def parse_description(line):
+	"""Parses a description line."""
+
+	description = {}
+
+	for description_pattern in DESCRIPTION_PATTERNS:
+		match = description_pattern.match(line)
+		if match:
+			description["type"] = match.group(1)
+			description["description"] = match.group(2)
+			break
+
+	if "type" not in description:
+		description["type"] = "UNKNOWN"
+		description["description"] = lines[1]
+
+	return description
 
 
 def main():
