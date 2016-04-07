@@ -13,7 +13,7 @@ from parsers import creditparser
 
 def test_parse_description():
 	"""Tests creditparser.parse_description()."""
-	with open("tests/parsers/data/test_credit_descriptions.json") as test_data_file:
+	with open("tests/parsers/data/credit_descriptions.json") as test_data_file:
 		for test_description in json.load(test_data_file):
 			description = creditparser.parse_description(test_description["description"])
 			assert description == test_description["expected"]
@@ -21,7 +21,7 @@ def test_parse_description():
 
 def test_parse_transaction():
 	"""Tests creditparser.parse_transaction()."""
-	with open("tests/parsers/data/test_credit_transactions.json") as test_data_file:
+	with open("tests/parsers/data/credit_transactions.json") as test_data_file:
 		for test_transaction in json.load(test_data_file):
 			transaction = creditparser.parse_transaction(test_transaction["transaction"])
 			assert transaction == test_transaction["expected"]
