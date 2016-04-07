@@ -28,7 +28,7 @@ def parse_file(input_file):
 	"""
 
 	# Removes unnecessary clutter from a report's lines:
-	lines = [re.sub(r"\t{2,}", r"\t", line.rstrip("\n")) for line in  open(input_file)]
+	lines = [re.sub(r"\t{2,}", r"\t", line.rstrip("\n")) for line in open(input_file, "r")]
 
 	return [parse_transaction(line) for line in lines if is_transaction(line)]
 

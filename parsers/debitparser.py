@@ -28,7 +28,7 @@ def parse_file(input_file):
 	"""
 
 	# Removes unnecessary clutter from a report's lines:
-	lines = [line.strip() for line in  open(input_file)]
+	lines = [line.strip() for line in open(input_file, "r")]
 
 	card = parse_card(lines[2])
 
