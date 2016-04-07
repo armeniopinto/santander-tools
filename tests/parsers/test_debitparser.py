@@ -25,3 +25,9 @@ def test_parse_transaction():
 		for test_transaction in json.load(test_data_file):
 			transaction = debitparser.parse_transaction(test_transaction["transaction"], "1234")
 			assert transaction == test_transaction["expected"]
+
+
+def test_parse_file():
+	"""Tests debitparser.parse_file()."""
+	with open("tests/parsers/data/debit_1.json", "r") as test_output_file:
+		assert json.load(test_output_file) == debitparser.parse_file("tests/parsers/data/debit_1.txt")

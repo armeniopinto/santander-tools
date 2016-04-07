@@ -1,0 +1,50 @@
+[
+	{
+		"card_type": "Debit",
+		"card": "1234",
+		"date": "2016-01-31",
+		"type": "BILL PAYMENT VIA FASTER PAYMENT",
+		"description": "SOMEONE 1",
+		"amount": -70.0
+	},
+	{
+		"card_type": "Debit",
+		"card": "1234",
+		"date": "2016-01-30",
+		"type": "TRANSFER TO",
+		"description": "SOME OTHER ACCOUNT",
+		"amount": -1000.0
+	},
+	{
+		"card_type": "Debit",
+		"card": "1234",
+		"date": "2016-01-27",
+		"type": "BILL PAYMENT",
+		"description": "SOMEONE 2",
+		"amount": -100.5
+	},
+	{
+		"card_type": "Debit",
+		"card": "1234",
+		"date": "2016-01-25",
+		"type": "CARD PAYMENT",
+		"description": "SOME SHOP 1",
+		"amount": -5.45
+	},
+	{
+		"card_type": "Debit",
+		"card": "1234",
+		"date": "2016-01-21",
+		"type": "BANK GIRO CREDIT",
+		"description": "SOME REFERENCE",
+		"amount": 2000.5
+	},
+	{
+		"card_type": "Debit",
+		"card": "1234",
+		"date": "2016-01-10",
+		"type": "FASTER PAYMENTS RECEIPT",
+		"description": "SOMEONE 3",
+		"amount": 10.1
+	}
+]

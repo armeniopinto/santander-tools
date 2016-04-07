@@ -51,6 +51,7 @@ def parse_transaction(lines, card):
 
 	transaction = {}
 
+	transaction["card_type"] = "Debit"
 	transaction["card"] = card
 	transaction["date"] = datetime.datetime.strptime(
 		DATE_PATTERN.match(lines[0]).group(1), "%d/%m/%Y").strftime("%Y-%m-%d")

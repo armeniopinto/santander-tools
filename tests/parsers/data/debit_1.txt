@@ -1,0 +1,33 @@
+From: 01/01/2016 to 31/01/2016
+							
+Account: XXXX XXXX XXXX 1234
+						
+Date: 31/01/2016
+Description: BILL PAYMENT VIA FASTER PAYMENT TO SOMEONE 1
+Amount: -70.00 	
+Balance: 2000.00 
+						
+Date: 30/01/2016
+Description: TRANSFER TO SOME OTHER ACCOUNT
+Amount: -1000.00 	
+Balance: 1000.00 
+						
+Date: 27/01/2016
+Description: BILL PAYMENT TO SOMEONE 2
+Amount: -100.50 	
+Balance: 899.50 
+						
+Date: 25/01/2016
+Description: CARD PAYMENT TO SOME SHOP 1
+Amount: -5.45 	
+Balance: 894.05 
+						
+Date: 21/01/2016
+Description: BANK GIRO CREDIT SOME REFERENCE
+Amount: 2000.50 	
+Balance: 2894.55 
+						
+Date: 10/01/2016
+Description: FASTER PAYMENTS RECEIPT SOMEONE 3
+Amount: 10.10 	
+Balance: 2914.65 
