@@ -6,6 +6,7 @@
 			"Amount: -123.45"
 		],
 		"expected": {
+			"card_type": "Debit",
 			"card": "1234",
 			"date": "2015-12-31",
 			"type": "TRANSFER TO",
@@ -20,6 +21,7 @@
 			"Amount: 123.45"
 		],
 		"expected": {
+			"card_type": "Debit",
 			"card": "1234",
 			"date": "2015-12-31",
 			"type": "TRANSFER FROM",

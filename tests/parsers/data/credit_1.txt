@@ -1,0 +1,11 @@
+2016-01-012016-02-061234
+Date			Card no.			Description				Money in	Money out
+-------------------------------------------------------------------------------------------------------------------------------
+2016-01-01		** 1234		PURCHASE - DOMESTIC            SOMEWHERE 1                SOME SHOP 1                 				11.22
+2016-01-02		** 4321		PURCHASE - DOMESTIC            SOMEWHERE 2                SOME SHOP 2                 				22.33
+2016-01-04				INITIAL BALANCE                  				123.45
+2016-01-07		** 1234		PURCHASE DOMESTIC REFUND       SOMEWHERE 3                SOME SHOP 3                 		34.43		
+2016-01-12		** 4321		PAYMENT RECEIVED                 		123.45		
+2016-01-16		** 1234		PURCHASE - INTERNATIONAL       SOMEWHERE 4                SOME SHOP 4                 				8.22
+2016-01-21		** 4321		RECURRENT TRANSACTION          SOMEWHERE 5                SOME SHOP 5                 				12.95
+-------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,59 @@
+[
+	{
+		"date": "2016-01-01",
+		"card_type": "Credit",
+		"card": "1234",
+		"type": "PURCHASE",
+		"sub_type": "DOMESTIC",
+		"location": "SOMEWHERE 1",
+		"description": "SOME SHOP 1",
+		"amount": -11.22
+	},
+	{
+		"date": "2016-01-02",
+		"card_type": "Credit",
+		"card": "4321",
+		"type": "PURCHASE",
+		"sub_type": "DOMESTIC",
+		"location": "SOMEWHERE 2",
+		"description": "SOME SHOP 2",
+		"amount": -22.33
+	},
+	{
+		"date": "2016-01-07",
+		"card_type": "Credit",
+		"card": "1234",
+		"type": "REFUND",
+		"sub_type": "DOMESTIC",
+		"location": "SOMEWHERE 3",
+		"description": "SOME SHOP 3",
+		"amount": 34.43
+	},
+	{
+		"date": "2016-01-12",
+		"card_type": "Credit",
+		"card": "4321",
+		"type": "PAYMENT RECEIVED",
+		"amount": 123.45
+	},
+	{
+		"date": "2016-01-16",
+		"card_type": "Credit",
+		"card": "1234",
+		"type": "PURCHASE",
+		"sub_type": "INTERNATIONAL",
+		"location": "SOMEWHERE 4",
+		"description": "SOME SHOP 4",
+		"amount": -8.22
+	},
+	{
+		"date": "2016-01-21",
+		"card_type": "Credit",
+		"card": "4321",
+		"type": "PURCHASE",
+		"sub_type": "RECURRENT",
+		"location": "SOMEWHERE 5",
+		"description": "SOME SHOP 5",
+		"amount": -12.95
+	}
+]
