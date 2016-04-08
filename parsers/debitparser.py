@@ -13,6 +13,16 @@ from decimal import Decimal
 import datetime
 import json
 
+
+# From: [start_date] to [end_date]
+FIRST_LINE_PATTERN = re.compile(r"From:\s\d{2}/\d{2}/\d{4}\sto\s\d{2}/\d{2}/\d{4}")
+
+def is_debit_report(input_file):
+	"""Returns True if the file is a debit report."""
+	with open(input_file, "r") as f:
+		return True if FIRST_LINE_PATTERN.match(f.readline()) else False
+
+
 def parse_file(input_file):
 	"""
 	Parses a TXT debit report and returns a list of transactions with the following attributes:
