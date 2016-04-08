@@ -1,7 +1,7 @@
 """
 creditparser.py
 
-Parses Santander UK credit card reports and produces a JSON file with the transactions.
+Parses Santander UK credit card reports and produces a list with the transactions.
 
 Copyright (C) 2016 by Arménio Pinto
 Please the the file /LICENSE for the license details.
@@ -10,7 +10,6 @@ Please the the file /LICENSE for the license details.
 import argparse
 import re
 from decimal import Decimal
-import json
 
 
 # [start_date][end_date][card]
@@ -112,25 +111,3 @@ def build_transaction_description(match, type):
 		"location": match.group(2),
 		"description": match.group(3)
 	}
-
-
-def main():
-	args = parse_arguments()
-	output = parse_file(args.input_file)
-	with open(args.output_file, "w") as o:
-		json.dump(output, o, indent = 4, separators = (",", ": "))
-
-
-def parse_arguments():
-	""" Parses the command-line arguments. """
-
-	parser = argparse.ArgumentParser(
-		description = "Converts Santander TXT credit reports to JSON.")
-	parser.add_argument("input_file", help = "The input TXT credit report path.")
-	parser.add_argument("output_file", help = "The output JSON credit report path.")
-
-	return parser.parse_args()
-
-
-if __name__ == "__main__":
-	main()
