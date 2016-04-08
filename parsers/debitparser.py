@@ -109,6 +109,6 @@ def parse_description(line):
 
 	if "type" not in description:
 		description["type"] = "UNKNOWN"
-		description["description"] = lines[1]
+		description["description"] = line
 
 	return description
