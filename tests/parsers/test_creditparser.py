@@ -11,6 +11,12 @@ import json
 from parsers import creditparser
 
 
+def test_is_credit_report():
+	"""Tests creditparser.is_credit_report()."""
+	assert creditparser.is_credit_report("tests/parsers/data/credit_1.txt")
+	assert not creditparser.is_credit_report("tests/parsers/data/debit_1.txt")
+
+
 def test_parse_description():
 	"""Tests creditparser.parse_description()."""
 	with open("tests/parsers/data/credit_descriptions.json", "r") as test_data_file:
