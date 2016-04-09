@@ -14,38 +14,36 @@ import creditparser
 import debitparser
 
 
-def convert():
-	"""Converts the supplied files."""
-
-	args = parse_arguments()
+def convert(reports_files, merged_file):
+	"""Converts the supplied reports, optionally merging them in a single JSON file."""
 
 	merged = []
-	for report in args.reports:
+	for report_file in reports_files:
 		transactions = []
-		if creditparser.is_credit_report(report):
-			transactions = creditparser.parse_file(report)
-		elif debitparser.is_debit_report(report):
-			transactions = debitparser.parse_file(report)
+		if creditparser.is_credit_report(report_file):
+			transactions = creditparser.parse_file(report_file)
+		elif debitparser.is_debit_report(report_file):
+			transactions = debitparser.parse_file(report_file)
 		else:
-			raise Exception(report + " isn't a known report.")
+			raise Exception(report_file + " isn't a known report.")
 
-		if args.merge:
+		if merged_file:
 			merged.extend(transactions)
-			print(report + " converted.")
+			print(report_file + " converted.")
 		else:
-			name, ext = os.path.splitext(report)
-			output = name + ".json"
-			save_transactions(transactions, output)
-			print(report + " converted to " + output)
+			name, ext = os.path.splitext(report_file)
+			output_file = name + ".json"
+			save_transactions(transactions, output_file)
+			print(report_file + " converted to " + output_file)
 
-	if args.merge:
-		save_transactions(merged, args.merge)
-		print("All transactions saved to " + args.merge)
+	if merged_file:
+		save_transactions(merged, merged_file)
+		print("All transactions saved to " + merged_file)
 
 
-def save_transactions(transactions, output):
+def save_transactions(transactions, output_file):
 	"""Writes a bunch of transactions to a JSON file."""
-	with open(output, "w") as f:
+	with open(output_file, "w") as f:
 		json.dump(transactions, f, indent = 4, separators = (",", ": "))
 
 
@@ -61,4 +59,5 @@ def parse_arguments():
 
 
 if __name__ == "__main__":
-	convert()
+	args = parse_arguments()
+	convert(args.reports, args.merge)
