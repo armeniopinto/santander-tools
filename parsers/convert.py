@@ -10,8 +10,8 @@ Please the the file /LICENSE for the license details.
 import argparse
 import os
 import json
-import creditparser
-import debitparser
+from . import creditparser
+from . import debitparser
 
 
 def convert(reports_files):
