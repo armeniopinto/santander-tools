@@ -30,10 +30,11 @@ def parse_file(input_file):
 	card - the debit card associated with the transaction.
 	card_type - the type of card, always 'Debit' for debit reports.
 	type - the textual description of the transaction type.
-	sub_type - the textual description of the transaction sub-type.
-	location - the place where the transaction occurred.
 	description - the textual description of the transaction.
 	amount - the transaction's amount (negative value for purchases, positive for money in).
+
+	:input_file the path to the report to parse.
+	:return: the list of transactions in the report.
 	"""
 
 	# Removes unnecessary clutter from a report's lines:
