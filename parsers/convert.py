@@ -55,7 +55,7 @@ if __name__ == "__main__":
 	args = parse_arguments()
 
 	merged = []
-	for report_file, transactions in convert(args.reports).items():
+	for report_file, transactions in sorted(convert(args.reports).items()):
 		if args.merge:
 			merged.extend(transactions)
 			print(report_file + " converted.")
