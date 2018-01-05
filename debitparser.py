@@ -38,7 +38,7 @@ def parse_file(input_file):
 	"""
 
 	# Removes unnecessary clutter from a report's lines:
-	lines = [line.strip() for line in open(input_file, "r")]
+	lines = [line.strip().replace("&amp;", "&") for line in open(input_file, "r")]
 
 	card = parse_card(lines[2])
 
@@ -57,43 +57,45 @@ DESCRIPTION_PATTERN = re.compile(r"Description:\s(.*)")
 AMOUNT_PATTERN = re.compile(r"Amount:\s(\-?\d+\.\d{2})")
 
 def parse_transaction(lines, card):
-	"""Parses a transaction lines."""
+	"""Parses a transaction's lines."""
 
 	transaction = {}
 
-	transaction["card_type"] = "Debit"
-	transaction["card"] = card
 	transaction["date"] = datetime.datetime.strptime(
 		DATE_PATTERN.match(lines[0]).group(1), "%d/%m/%Y").strftime("%Y-%m-%d")
-	transaction.update(parse_description(DESCRIPTION_PATTERN.match(lines[1]).group(1)))
+	transaction["card_type"] = "Debit"
+	transaction["card_number"] = card
+	transaction.update(parse_description(DESCRIPTION_PATTERN.match(lines[1]).group(1).strip()))
 	transaction["amount"] = float(Decimal(AMOUNT_PATTERN.match(lines[2]).group(1)))
 
 	return transaction
 
 
 DESCRIPTION_PATTERNS = [
-	re.compile(r"(CARD\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"(CASH\ WITHDRAWAL)\ AT\ (.*)"),
-	re.compile(r"(CASH\ WITHDRAWAL\ REVERSAL)\ AT\ (.*)"),
-	re.compile(r"(CASH\ WITHDRAWAL\ HANDLING\ CHARGE)\ (.*)"),
-	re.compile(r"(CASH\ PAID\ IN)\ AT\ (.*)"),
-	re.compile(r"(POST\ OFFICE\ CASH\ WITHDRAWAL)()"),
-	re.compile(r"(DIRECT\ DEBIT\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"(BILL\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"(BILL\ PAYMENT\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"\s?(FASTER\ PAYMENTS\ RECEIPT) (.*)"),
-	re.compile(r"(TRANSFER\ TO)\ (.*)"),
-	re.compile(r"(TRANSFER\ FROM)\ (.*)"),
-	re.compile(r"(TRANSFER\ VIA\ FASTER\ PAYMENT)()"),
-	re.compile(r"(REJECTED\ TRANSFER\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"(REGULAR\ TRANSFER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"(STANDING\ ORDER\ VIA\ FASTER\ PAYMENT)\ TO\ (.*)"),
-	re.compile(r"(BANK\ GIRO\ CREDIT)\ (.*)"),
-	re.compile(r"(CREDIT)\ FROM\ (.*)"),
-	re.compile(r"(CHEQUE\ PAID\ IN)\ AT\ (.*)"),
-	re.compile(r"(BANK\ CHEQUE)\ (.*)"),
-	re.compile(r"(INTEREST\ PAID)\ (.*)"),
-	re.compile(r"(OVERSEAS\ TRANSACTION\ FEE)()")
+	re.compile(r"(?P<t>CARD\ PAYMENT)\ TO\ (?P<d>[^,]*).*"),
+	re.compile(r"(?P<t>CASH\ WITHDRAWAL)\ AT\ (?P<d>[^,]*),\s?(?P<l>[^,]*).*"),
+	re.compile(r"(?P<t>CASH\ WITHDRAWAL\ REVERSAL)\ AT\ (?P<d>[^,]*),\s?(?P<l>[^,]*).*"),
+	re.compile(r"(?P<t>CASH\ WITHDRAWAL\ HANDLING\ CHARGE)\ (?P<d>.*)"),
+	re.compile(r"(?P<t>CASH\ PAID\ IN)\ AT\ (?P<d>.*)"),
+	re.compile(r"(?P<l>POST\ OFFICE)\ (?P<t>CASH\ WITHDRAWAL)"),
+	re.compile(r"(?P<t>DIRECT\ DEBIT\ PAYMENT)\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t>BILL\ PAYMENT)\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t>BILL\ PAYMENT)\ VIA\ (?P<t2>FASTER\ PAYMENT)\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t2>FASTER\ PAYMENT)S\ (?P<t>RECEIPT) (?P<d>.*)"),
+	re.compile(r"(?P<t>TRANSFER\ TO)\ (?P<d>.*)"),
+	re.compile(r"(?P<t>TRANSFER\ FROM)\ (?P<d>.*)"),
+	re.compile(r"(?P<t>TRANSFER)\ VIA\ (?P<t2>FASTER\ PAYMENT)(?P<d>)"),
+	re.compile(r"(?P<t>REJECTED\ TRANSFER)\ VIA\ (?P<t2>FASTER\ PAYMENT)\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t>REGULAR\ TRANSFER\ PAYMENT)\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t>STANDING\ ORDER)\ PAYMENT\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t>STANDING\ ORDER)\ VIA\ (?P<t2>FASTER\ PAYMENT)\ TO\ (?P<d>.*)"),
+	re.compile(r"(?P<t>BANK\ GIRO\ CREDIT)\ (?P<d>.*)"),
+	re.compile(r"(?P<t>CREDIT)\ FROM\ (?P<d>.*)"),
+	re.compile(r"(?P<t>CHEQUE\ PAID\ IN)\ AT\ (?P<d>.*)"),
+	re.compile(r"(?P<t>BANK\ CHEQUE)\ (?P<d>.*)"),
+	re.compile(r"(?P<t>INTEREST\ PAID)\ (?P<d>.*)"),
+	re.compile(r"(?P<t>OVERSEAS\ TRANSACTION\ FEE)"),
+	re.compile(r"(?P<t>REFUND)\ AT (?P<d>.*)")
 ]
 
 def parse_description(line):
@@ -104,8 +106,14 @@ def parse_description(line):
 	for description_pattern in DESCRIPTION_PATTERNS:
 		match = description_pattern.match(line)
 		if match:
-			description["type"] = match.group(1)
-			description["description"] = match.group(2)
+			keys = match.groupdict()
+			description["type"] = match.group("t")
+			if "t2" in keys:
+				description["sub_type"] = match.group("t2")
+			if "l" in keys:
+				description["location"] = match.group("l").upper()
+			if ("d" in keys) and match.group("d"):
+				description["description"] = match.group("d")
 			break
 
 	if "type" not in description:
