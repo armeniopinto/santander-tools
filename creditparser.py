@@ -54,12 +54,13 @@ def is_transaction(line):
 
 def parse_transaction(line):
 	"""Parses a transaction line."""
+	line = line.strip()
 
 	transaction = {}
 	match = TRANSACTION_PATTERN.match(line)
 	transaction["date"] = match.group(1)
 	transaction["card_type"] = "Credit"
-	transaction["card"] = match.group(2)
+	transaction["card_number"] = match.group(2)
 	transaction.update(parse_description(match.group(3)))
 	amount = Decimal(match.group(4))
 	# All "money-out" transaction lines end with a non-tab. This is a bit of a hack :(.
